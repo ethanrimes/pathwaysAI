@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Logic for login handling goes here
     if (email && password) {
-      console.log('Logging in with:', email, password);
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User signed in successfully!');
+        })
+        .catch(error => {
+          console.error('Login failed', error);
+        });
     } else {
       console.log('Please fill in both fields');
     }

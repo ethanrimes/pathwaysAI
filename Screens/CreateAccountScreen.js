@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 export default function CreateAccountScreen() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleCreateAccount = () => {
-    // Logic for account creation handling goes here
-    if (username && password) {
-      console.log('Creating account with:', username, password);
+    if (email && password) {
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+
+          console.error('Account creation failed', error);
+        });
     } else {
       console.log('Please fill in both fields');
     }
@@ -20,9 +35,10 @@ export default function CreateAccountScreen() {
       
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
+        placeholder="Email"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+        keyboardType="email-address"
         autoCapitalize="none"
       />
 
