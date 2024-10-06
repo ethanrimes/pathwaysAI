@@ -1,19 +1,15 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, View, Text } from 'react-native';
 import CreateAccountScreen from './Screens/CreateAccountScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
-import AuthScreen from './Screens/AuthScreen';
 import { StatusBar } from 'expo-status-bar';
 import StylesGlobal from './Styles/stylesGlobal';
 
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthStack from './navigation/AuthStack';  // Authentication flow
-import MainApp from './navigation/MainApp';  // Main app flow
+import AuthScreen from './Screens/AuthScreen';  // Authentication flow
 import { onAuthStateChanged } from 'firebase/auth';  // Assuming you are using Firebase for authentication
 import { auth } from './firebaseConfig';  // Your Firebase configuration
 
@@ -47,7 +43,7 @@ const App = () => {
   return (
     <AuthContext.Provider value={{ user }}>
       <NavigationContainer>
-        {user ? <MainApp /> : <AuthStack />}
+        {user ? <HomeScreen /> : <AuthScreen />}
       </NavigationContainer>
     </AuthContext.Provider>
   );
