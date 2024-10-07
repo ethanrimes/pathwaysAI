@@ -1,23 +1,20 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Button, View, Text } from 'react-native';
-import CreateAccountScreen from './Screens/CreateAccountScreen';
-import HomeScreen from './Screens/HomeScreen';
-import LoginScreen from './Screens/LoginScreen';
-import { StatusBar } from 'expo-status-bar';
-import StylesGlobal from './Styles/stylesGlobal';
-
-import React, { useState, useEffect, createContext, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthScreen from './Screens/AuthScreen';  // Authentication flow
-import { onAuthStateChanged } from 'firebase/auth';  // Assuming you are using Firebase for authentication
-import { auth } from './firebaseConfig';  // Your Firebase configuration
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { onAuthStateChanged, getAuth } from 'firebase/auth'; // Ensure firebase/auth is correctly imported
+import HomeScreen from './Screens/HomeScreen';
+import AuthScreen from './Screens/AuthScreen'; // Assuming this is the screen with login and create account options
+import { firebaseConfig } from './Backend/firebaseConfig'; // Your Firebase configuration file
+import { initializeApp } from 'firebase/app';
 
-// Create an Auth Context
+// Initialize Firebase App
+initializeApp(firebaseConfig);
+
+// Create Auth Context to share authentication status across the app
 const AuthContext = createContext();
-
 export const useAuth = () => useContext(AuthContext);
-// Tab Navigator
+
+// Tab Navigator (can be used in HomeScreen)
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -26,6 +23,7 @@ const App = () => {
 
   // Listen for authentication state changes
   useEffect(() => {
+    const auth = getAuth(); // Initialize the Firebase Auth
     const unsubscribe = onAuthStateChanged(auth, (authenticatedUser) => {
       setUser(authenticatedUser);
       setLoading(false);
@@ -36,7 +34,7 @@ const App = () => {
   }, []);
 
   if (loading) {
-    // Optionally, you could show a loading screen here
+    // Optionally, you could show a loading screen here while checking authentication state
     return null;
   }
 
@@ -50,9 +48,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-

@@ -1,21 +1,32 @@
 import { initializeApp } from 'firebase/app';
+import 'dotenv/config';  // To load variables from .env file (in Node.js or backend)
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
 
+import {
+    REACT_APP_FIREBASE_PROJECT_ID,
+    REACT_APP_FIREBASE_PRIVATE_KEY_ID,
+    REACT_APP_FIREBASE_PRIVATE_KEY,
+    REACT_APP_FIREBASE_CLIENT_EMAIL,
+    REACT_APP_FIREBASE_CLIENT_ID,
+    REACT_APP_FIREBASE_AUTH_URI,
+    REACT_APP_FIREBASE_TOKEN_URI
+  } from '@env';
+  
+  console.log('Firebase Project ID:', REACT_APP_FIREBASE_PROJECT_ID);
+  console.log('Firebase Client Email:', REACT_APP_FIREBASE_CLIENT_EMAIL);
+  
+
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
-    type: process.env.FIREBASE_PROJECT_TYPE,
-    project_id: process.env.FIREBASE_PROJECT_ID,
-    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: process.env.FIREBASE_PRIVATE_KEY,
-    client_email: process.env.FIREBASE_CLIENT_EMAIL,
-    client_id: process.env.FIREBASE_CLIENT_ID,
-    auth_uri: process.env.FIREBASE_AUTH_URI,
-    token_uri: process.env.FIREBASE_TOKEN_URI,
-    auth_provider_x509_cert_url: process.env.FIREBASE_XFIVEZERONINE_CERT_URL,
-    client_x509_cert_url: process.env.FIREBASE_CLIENT_XFIVEZERONINE_CERT_URL,
-    universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN
+  projectId: REACT_APP_FIREBASE_PROJECT_ID,
+  privateKeyId: REACT_APP_FIREBASE_PRIVATE_KEY_ID,
+  privateKey: REACT_APP_FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Replace escaped newlines
+  clientEmail: REACT_APP_FIREBASE_CLIENT_EMAIL,
+  clientId: REACT_APP_FIREBASE_CLIENT_ID,
+  authUri: REACT_APP_FIREBASE_AUTH_URI,
+  tokenUri: REACT_APP_FIREBASE_TOKEN_URI,
 };
 
 const app = initializeApp(firebaseConfig);
