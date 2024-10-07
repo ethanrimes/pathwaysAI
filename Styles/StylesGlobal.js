@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-
 const StylesGlobal = StyleSheet.create({
     container: {
       flex: 1,
@@ -8,5 +7,4 @@ const StylesGlobal = StyleSheet.create({
       justifyContent: 'center',
     },
   });
-
   export default StylesGlobal;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-
 const AuthScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
@@ -10,7 +9,6 @@ const AuthScreen = ({ navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,5 +21,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
 export default AuthScreen;

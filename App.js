@@ -6,21 +6,16 @@ import HomeScreen from './Screens/HomeScreen';
 import AuthScreen from './Screens/AuthScreen'; // Assuming this is the screen with login and create account options
 import { firebaseConfig } from './Backend/firebaseConfig'; // Your Firebase configuration file
 import { initializeApp } from 'firebase/app';
-
 // Initialize Firebase App
 initializeApp(firebaseConfig);
-
 // Create Auth Context to share authentication status across the app
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
-
 // Tab Navigator (can be used in HomeScreen)
 const Tab = createBottomTabNavigator();
-
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   // Listen for authentication state changes
   useEffect(() => {
     const auth = getAuth(); // Initialize the Firebase Auth
@@ -28,16 +23,13 @@ const App = () => {
       setUser(authenticatedUser);
       setLoading(false);
     });
-
     // Cleanup the listener on unmount
     return () => unsubscribe();
   }, []);
-
   if (loading) {
     // Optionally, you could show a loading screen here while checking authentication state
     return null;
   }
-
   return (
     <AuthContext.Provider value={{ user }}>
       <NavigationContainer>
@@ -46,5 +38,4 @@ const App = () => {
     </AuthContext.Provider>
   );
 };
-
 export default App;
