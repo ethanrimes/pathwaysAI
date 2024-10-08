@@ -1,45 +1,26 @@
+import { Platform } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-// Import other Firebase services as needed
+// Import the Node.js file that returns the Firebase config based on the platform
+import getFirebaseConfigOptions from './getFirebaseConfigOptions';  // Adjust the path as needed
 
 let firebaseApp;
 
 export const initializeFirebase = () => {
-    let configOptions;
+    
+    const platform = Platform.OS;  // Determine the platform (iOS or Android)
+    console.log('Platform:', Platform.OS);
+    // Fetch the Firebase configuration from the Node.js file based on the platform
+    const configOptions = getFirebaseConfig(platform);    
+    // Log the configuration for debugging purposes
+    console.log('Firebase Config:', configOptions);
 
-    if (Platform.OS === 'ios') {
-        // You'd need to create a native module to access iOSFirebaseConfig
-        // config = iOSFirebaseConfig.getConfig();
-        configOptions = {
-            apiKey: process.env.IOS_FIREBASE_API_KEY,
-            authDomain: process.env.IOS_FIREBASE_AUTH_DOMAIN,
-            projectId: process.env.IOS_FIREBASE_PROJECT_ID,
-            storageBucket: process.env.IOS_FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: process.env.IOS_FIREBASE_MESSAGING_SENDER_ID,
-            appId: process.env.IOS_FIREBASE_APP_ID,   
-        };
-
-    } else if (Platform.OS === 'android') {
-        configOptions = {
-            apiKey: process.env.ANDROID_FIREBASE_API_KEY,
-            authDomain: process.env.ANDROID_FIREBASE_AUTH_DOMAIN,
-            projectId: process.env.ANDROID_FIREBASE_PROJECT_ID,
-            storageBucket: process.env.ANDROID_FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: process.env.ANDROID_FIREBASE_MESSAGING_SENDER_ID,
-            appId: process.env.ANDROID_FIREBASE_APP_ID,   
-        };
-
-    } else {
-        throw new Error('Unsupported platform');
+    if (!firebaseApp) {
+      firebaseApp = initializeApp(configOptions);
     }
 
-
-  if (!firebaseApp) {
-    firebaseApp = initializeApp(configOptions);
-  }
-
-  return firebaseApp;
+    return firebaseApp;
 };
 
 export const getFirebaseApp = () => {
@@ -51,4 +32,3 @@ export const getFirebaseApp = () => {
 
 export const db = getFirestore(getFirebaseApp());
 export const auth = getAuth(getFirebaseApp());
-// Export other Firebase services as needed
