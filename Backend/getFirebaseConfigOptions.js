@@ -1,4 +1,6 @@
 // (Node.js file)
+require('dotenv').config();  // Ensure this is added if you're using dotenv
+
 module.exports = function getFirebaseConfig(platform) {
     if (platform === 'ios') {
       return {
