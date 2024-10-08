@@ -12,12 +12,13 @@ initializeFirebase();
 // Create Auth Context to share authentication status across the app
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
-const [user, setUser] = useState(null);
-const [loading, setLoading] = useState(true);
 
 // Tab Navigator (can be used in HomeScreen)
 const Tab = createBottomTabNavigator();
 const App = () => {
+  
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   // Listen for authentication state changes
   useEffect(() => {
     const auth = getAuth(); // Initialize the Firebase Auth
