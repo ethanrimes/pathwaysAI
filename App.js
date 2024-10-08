@@ -4,10 +4,8 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { onAuthStateChanged, getAuth } from 'firebase/auth'; // Ensure firebase/auth is correctly imported
 import HomeScreen from './Screens/HomeScreen';
 import AuthScreen from './Screens/AuthScreen'; // Assuming this is the screen with login and create account options
-import { initializeFirebase } from './Backend/firebaseConfig';
-
-// Initialize Firebase
-initializeFirebase();
+import { firebaseClient, authInstance } from './Backend/firebaseConfig';
+import { AppRegistry } from 'react-native';
 
 // Create Auth Context to share authentication status across the app
 const AuthContext = createContext();
@@ -43,4 +41,5 @@ const App = () => {
     </AuthContext.Provider>
   );
 };
+
 export default App;
