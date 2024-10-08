@@ -12,7 +12,7 @@ export const initializeFirebase = () => {
     const platform = Platform.OS;  // Determine the platform (iOS or Android)
     console.log('Platform:', Platform.OS);
     // Fetch the Firebase configuration from the Node.js file based on the platform
-    const configOptions = getFirebaseConfig(platform);    
+    const configOptions = getFirebaseConfigOptions(platform);    
     // Log the configuration for debugging purposes
     console.log('Firebase Config:', configOptions);
 
